@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  api:
+    container_name: api
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_USER=pedro
+      - DB_HOST=db
+      - DB_PASSWORD=pedro123
+      - DB=vehicles_db_docker
+      - SECRET_KEY=kDIAuljskHJ)EJWre1)@!2Nioujdh8J)!E@_E9d1u98(EUO283u09UJ)(@)#(*UI)(@u09SI)O31
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  db:
+    container_name: db
+    image: postgres:latest
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRES_USER=pedro
+      - POSTGRES_PASSWORD=pedro123
+      - POSTGRES_DB=vehicles_db_docker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pedro -d vehicles_db_docker"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - postgres_vehicles:/var/lib/postgresql/data
+
+volumes:
+  postgres_vehicles:
+    driver: local
