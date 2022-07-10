@@ -24,7 +24,7 @@ const loginService = async (user: ILogin): Promise<IToken> => {
   const token = jwt.sign(
     {id: findUser.id},
     String(process.env.SECRET_KEY),
-    {expiresIn: '1h'} 
+    {expiresIn: '1d'} 
   )
 
   return {token, id: findUser.id}
