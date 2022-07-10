@@ -5,7 +5,7 @@ import plateVerify from "../middlewares/plateVerify.middleware"
 
 const vehiclesRouter = Router()
 
-vehiclesRouter.post('',auth,plateVerify, createVehiclesController)
+vehiclesRouter.post('',auth, createVehiclesController)
 vehiclesRouter.get('',auth, listVehiclesController)
 vehiclesRouter.get('/:id',auth, listVehicleController)
 vehiclesRouter.patch('/:id',auth, updateVehicleController)
