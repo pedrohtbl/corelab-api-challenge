@@ -1,10 +1,10 @@
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/user.entity";
-import { ILogin } from "../../interfaces/login.interfaces";
+import { ILogin, IToken } from "../../interfaces/login.interfaces";
 import * as bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
-const loginService = async (user: ILogin): Promise<string> => {
+const loginService = async (user: ILogin): Promise<IToken> => {
   const userRepository = AppDataSource.getRepository(User)
 
   const {email, password} = user
@@ -27,7 +27,7 @@ const loginService = async (user: ILogin): Promise<string> => {
     {expiresIn: '1h'} 
   )
 
-  return token
+  return {token, id: findUser.id}
 }
 
 export default loginService
